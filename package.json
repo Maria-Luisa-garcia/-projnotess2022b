@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./server/bin/www",
     "dev": "nodemon ./server/bin/www",
-    "build": "",
+    "clean": "rimraf dist",
+    "build": "npm run clean && babel ./server --out-dir dist --copy-files",
     "itgam": "ls"
   },
   "dependencies": {
