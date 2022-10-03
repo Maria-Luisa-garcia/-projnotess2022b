@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./server/bin/www",
-     "dev": "nodemon ./server/bin/www",
+    "dev": "nodemon --exec babel-node ./server/bin/www",
+    "devc": "SET NODE_ENV=development && webpack serve --config ./webpack.config.js --mode development",
+    "devb":"babel-watch ./server/bin/www",
     "clean": "rimraf dist",
     "build": "npm run clean && babel ./server --out-dir dist --copy-files",
     "itgam": "ls"
@@ -22,7 +24,7 @@
     "mongoose": "^6.0.5",
     "morgan": "~1.9.1",
     "rimraf": "^3.0.2",
-    "webpack": "^5.35.0",
+    "webpack": "^5.74.0",
     "webpack-dev-middleware": "^4.2.0",
     "webpack-hot-middleware": "^2.25.0",
     "winston": "^3.3.3",
@@ -51,6 +53,6 @@
     "nodemon": "^2.0.19",
     "prettier": "^2.4.1",
     "webpack-cli": "^4.6.0",
-    "webpack-dev-server": "^4.11.0"
+    "webpack-dev-server": "^4.11.1"
   }
 }
