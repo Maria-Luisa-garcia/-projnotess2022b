@@ -7,8 +7,8 @@
 // var app = require('../app');
 // ES6 👇
 import app from "../app"
-var debug = require('debug')('projnotess2022b');
-var http = require('http');
+import debug from '../servicie/debugLogger'
+import http from 'http';
 
 /**
  * Get port from environment and store in Express.
