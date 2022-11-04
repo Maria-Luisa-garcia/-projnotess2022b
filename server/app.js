@@ -12,7 +12,8 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 // Biblioteca que registra en consola
 // solicitudes del cliente
-import logger from 'morgan';
+
+import morgan from 'morgan';
 import debug from './services/debugLogger'
 
 // Importando Webbpack middleware
@@ -20,18 +21,14 @@ import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 import webpackConfig from '../webpack.dev.config'
-
 // Recuperar el modo de ejecución de la app
 const nodeEnv = process.env.NODE_ENV || 'development'
-
 // Definición de rutas
 import indexRouter from "./routes/index";
 import usersRouter from "./routes/users";
 import WebpackHotMiddleware from 'webpack-hot-middleware';
-
 // Creando una instancia de express
 const app = express();
-
 // Inclusion del webpack middleware
 if (nodeEnv === 'development') {
   debug('✒ Ejecutando en modo de desarrollo 👨‍💻')
@@ -58,7 +55,6 @@ if (nodeEnv === 'development') {
 } else {
   debug('✒ Ejecutando en modo de producción 🏭')
 }
-
 // view engine setup
 // Configura el motor de plantillas
 // 1. Establecer donde estarán las plantillas
@@ -67,8 +63,9 @@ if (nodeEnv === 'development') {
 app.set('views', path.join(__dirname, 'views'));
 // Establezco que motor precargado usare
 app.set('view engine', 'hbs');
+
 // Establezco Middelware
-app.use((logger('dev')));
+app.use((morgan('dev')));
 // Middleware para parsear a json la peticion
 app.use(express.json());
 // Decodificar la url
