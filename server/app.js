@@ -1,4 +1,4 @@
-// Biblioteca de 3ros para manejar errores http
+ // Biblioteca de 3ros para manejar errores http
 // ES5: var createError = require('http-errors');
 // ES6 👇
 import createError from 'http-errors';
@@ -18,6 +18,9 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import WebpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack.dev.config';
+
+// Importando el configurador de motor de plantillas
+import configTemplateEngine from './config/templateEngine';
 
 // Logger de la aplicación
 import logger from './config/winston';
@@ -63,6 +66,7 @@ if (nodeEnv === 'development') {
 
 // view engine setup
 // Configura el motor de plantillas
+configTemplateEngine(app);
 // 1. Establecer donde estarán las plantillas
 // (Vistas -> Views)
 // app.set("<nombre de la var>", <valor>)
