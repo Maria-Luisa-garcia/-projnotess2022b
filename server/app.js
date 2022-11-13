@@ -1,4 +1,4 @@
- // Biblioteca de 3ros para manejar errores http
+// Biblioteca de 3ros para manejar errores http
 // ES5: var createError = require('http-errors');
 // ES6 👇
 import createError from 'http-errors';
@@ -12,7 +12,6 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 // Registrador de eventos HTTP
 import morgan from 'morgan';
-
 // Importando Webbpack middleware
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
@@ -26,15 +25,13 @@ import configTemplateEngine from './config/templateEngine';
 import logger from './config/winston';
 import debug from './services/debugLogger';
 
-// Definición de rutas
-import indexRouter from './routes/index';
-import usersRouter from './routes/users';
+// Importando enrutador
+import router from './routes/router';
 // Recuperar el modo de ejecución de la app
 const nodeEnv = process.env.NODE_ENV || 'development';
 
 // Creando una instancia de express
 const app = express();
-
 // Inclusion del webpack middleware
 if (nodeEnv === 'development') {
   debug('✒ Ejecutando en modo de desarrollo 👨‍💻');
@@ -63,17 +60,9 @@ if (nodeEnv === 'development') {
 } else {
   debug('✒ Ejecutando en modo de producción 🏭');
 }
-
 // view engine setup
 // Configura el motor de plantillas
 configTemplateEngine(app);
-// 1. Establecer donde estarán las plantillas
-// (Vistas -> Views)
-// app.set("<nombre de la var>", <valor>)
-app.set('views', path.join(__dirname, 'views'));
-// Establezco que motor precargado usare
-app.set('view engine', 'hbs');
-
 // Establezco Middelware
 app.use(morgan('dev', { stream: logger.stream }));
 // Middleware para parsear a json la peticion
@@ -85,10 +74,9 @@ app.use(cookieParser());
 // Servidor de archivos estáticos
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-// Registro Rutas
-app.use('/', indexRouter);
-app.use('/index', indexRouter);
-app.use('/users', usersRouter);
+// Agregando rutas a la aplicacion
+// con el enrutador
+router.addRoutes(app);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -97,21 +85,17 @@ app.use((req, res, next) => {
   );
   next(createError(404));
 });
-
 // error handler
 app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // Registrando mensaje de error
   logger.error(`${err.status || 500} - ${err.message}`);
-
   // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
-
 // Exportando la instancia del server "app"
 // ES5 👇
 // module.exports = app;
