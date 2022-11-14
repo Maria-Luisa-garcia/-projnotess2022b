@@ -17,4 +17,4 @@ const about = (req, res) => {
 };
 
 // Exportando el Controlador
-export default { home, about};
+export default { home, about };
