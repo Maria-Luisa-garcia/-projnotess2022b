@@ -8,9 +8,13 @@ const home = (req, res) => {
     author: 'Garcia Tellez Maria Luisa',
   };
 
-  // 2. Madamos a generar la vista con el Template Engine
-  res.render('home', viewModel);
+  // 2. Mandamos a generar la vista con el Template Engine
+  res.render('home/home', viewModel);
+};
+
+const about = (req, res) => {
+  res.render('home/about', {});
 };
 
 // Exportando el Controlador
-export default { home };
+export default { home, about };
